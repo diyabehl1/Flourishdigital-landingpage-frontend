@@ -33,12 +33,15 @@ export default function Contact() {
             message,
         };
 
-        try {
-            const res = await fetch("http://localhost:5000/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-            });
+       try {
+    const res = await fetch(
+        "https://flourishdigital-landing-page-backend-1.onrender.com/contact",
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        }
+    );
 
             const data = await res.json();
             if (data.success) {
