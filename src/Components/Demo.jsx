@@ -1,14 +1,12 @@
-
-
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function LiveDemoSide() {
     const [messages, setMessages] = useState([
-        { text: "Hi! I’m Flourish AI. Ask me about pricing, features, or integrations.", sender: "bot" },
+        { text: "Hi! I’m Flourish AI. Ask me about features or integrations.", sender: "bot" },
     ]);
     const [lastBotReply, setLastBotReply] = useState(
-        "Hi! I’m Flourish AI. Ask me about pricing, features, or integrations."
+        "Hi! I’m Flourish AI. Ask me about features or integrations."
     );
     const [recognizing, setRecognizing] = useState(false);
 
@@ -27,17 +25,15 @@ export default function LiveDemoSide() {
 
     const botReply = (user) => {
         const u = user.toLowerCase();
-        if (u.includes("price") || u.includes("cost"))
-            return "Our Pro plan is $99/mo for text + voice with WhatsApp and CRM export. Starter is $49/mo.";
         if (u.includes("feature") || u.includes("capab"))
-            return "We handle FAQs, lead capture, WhatsApp, voice IVR, and CRM integrations — all brand-trained.";
+            return "We handle FAQs, lead capture, WhatsApp, voice assistant, and integrations — all brand-trained.";
         if (u.includes("demo") || u.includes("trial") || u.includes("book"))
             return "Drop your email in the form below — we’ll book your free demo and tailor it to your use-case.";
         if (u.includes("integration") || u.includes("crm") || u.includes("whatsapp"))
             return "Yes! We integrate with WhatsApp and push leads to your CRM or Google Sheets.";
         if (u.includes("hello") || u.includes("hi"))
             return "Hello! How can I help you explore Flourish chatbots today?";
-        return "Great question! Tell me if you want details on pricing, features, or integrations — or book a free demo below.";
+        return "Great question! Tell me if you want details on features or integrations — or book a free demo below.";
     };
 
     const sendMessage = useCallback(() => {
@@ -89,7 +85,7 @@ export default function LiveDemoSide() {
         <section className="py-20 bg-gray-50">
             <motion.div
                 id="demo"
-                className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 px-6 items-start"
+                className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 px-4 sm:px-6 items-start"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -97,7 +93,7 @@ export default function LiveDemoSide() {
             >
                 {/* Demo Chat Box */}
                 <motion.div
-                    className="flex flex-col"
+                    className="flex flex-col w-full"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -110,39 +106,41 @@ export default function LiveDemoSide() {
                         {messages.map((msg, idx) => (
                             <div
                                 key={idx}
-                                className={`mb-2 p-2 rounded-lg max-w-xs break-words ${msg.sender === "bot"
-                                    ? "bg-blue-100 self-start"
-                                    : "bg-green-100 self-end ml-auto"
-                                    }`}
+                                className={`mb-2 p-2 rounded-lg max-w-[75%] sm:max-w-xs break-words ${
+                                    msg.sender === "bot"
+                                        ? "bg-blue-100 self-start"
+                                        : "bg-green-100 self-end ml-auto"
+                                }`}
                             >
                                 {msg.text}
                             </div>
                         ))}
                     </div>
 
-                    <div className="flex gap-2">
+                    {/* Input + Buttons (Responsive) */}
+                    <div className="flex flex-col sm:flex-row gap-2 w-full">
                         <input
                             ref={inputRef}
                             type="text"
                             placeholder="Type your message..."
-                            className="flex-1 border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="flex-1 w-full sm:w-auto min-w-[120px] border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                             onKeyDown={handleKeyDown}
                         />
                         <button
                             onClick={handleVoiceClick}
-                            className="bg-gray-200 px-3 py-2 rounded-lg hover:bg-gray-300"
+                            className="w-full sm:w-auto bg-gray-200 px-3 py-2 rounded-lg hover:bg-gray-300"
                         >
                             🎤
                         </button>
                         <button
                             onClick={handleTTS}
-                            className="bg-gray-200 px-3 py-2 rounded-lg hover:bg-gray-300"
+                            className="w-full sm:w-auto bg-gray-200 px-3 py-2 rounded-lg hover:bg-gray-300"
                         >
                             🔊
                         </button>
                         <button
                             onClick={sendMessage}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                            className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
                         >
                             Send
                         </button>
@@ -157,7 +155,7 @@ export default function LiveDemoSide() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <h2 className="text-3xl  text-black  font-bold mb-4">
+                    <h2 className="text-2xl sm:text-3xl text-black font-bold mb-4">
                         See Your AI Assistant in Action
                     </h2>
                     <p className="text-gray-700 mb-6">
@@ -169,11 +167,15 @@ export default function LiveDemoSide() {
                         <li>Friendly tone + brand-trained knowledge</li>
                         <li>Easy website & WhatsApp embed</li>
                     </ul>
-                    <button className="bg-gradient-to-r from-blue-600 to-sky-400 text-white px-5 py-2  rounded-lg hover:opacity-90 transition h-10 w-50">
-                        Book a Free Demo
-                    </button>
+                    <a href="#contact">
+                        <button className="bg-gradient-to-r from-blue-600 to-sky-400 text-white px-5 py-2 rounded-lg hover:opacity-90 transition w-full sm:w-auto">
+                            Book a Free Demo
+                        </button>
+                    </a>
                 </motion.div>
             </motion.div>
         </section>
     );
 }
+
+
